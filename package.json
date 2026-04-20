@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Authentication API for Agent IDE application",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon --exec \"node --no-deprecation\" src/server.js"
+    "dev": "nodemon src/server.js"
   },
   "keywords": [
     "auth",

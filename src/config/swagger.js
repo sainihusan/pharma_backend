@@ -13,8 +13,8 @@ const options = {
     },
     servers: [
       {
-        url: `https://7z14kgzx-5000.inc1.devtunnels.ms/`,
-        description: "Local development server",
+        url: process.env.BASE_URL || "http://localhost:5000",
+        description: "Current Server",
       },
     ],
     components: {
