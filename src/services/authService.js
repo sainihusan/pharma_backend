@@ -37,7 +37,7 @@ const signup = async (username, dateOfBirth, gender, email, password) => {
       otpExpires,
     });
     // Send email in background - don't block the response
-    sendOtpEmail(email, otp, "Verify Your Agent IDE Account").catch((err) =>
+    sendOtpEmail(email, otp, "Verify Your PharmaCare Account").catch((err) =>
       console.error("Email send failed:", err.message)
     );
 
@@ -153,7 +153,7 @@ const forgotPassword = async (email) => {
     user.otpExpires = otpExpires;
     await user.save();
 
-    await sendOtpEmail(email, otp, "Reset Your Agent IDE Password");
+    await sendOtpEmail(email, otp, "Reset Your PharmaCare Password");
 
     return { message: "Password reset OTP sent to your email" };
   } catch (error) {
