@@ -36,13 +36,10 @@ const signup = async (username, dateOfBirth, gender, email, password) => {
       otp,
       otpExpires,
     });
-    // Send email and await it to ensure it's sent successfully
-    try {
-      await sendOtpEmail(email, otp, "Verify Your Agent IDE Account");
-    } catch (err) {
-      console.error("Email send failed during signup:", err.message);
-      // We still return the user but we could log that verification email is pending
-    }
+    // Send email in background - don't block the response
+    sendOtpEmail(email, otp, "Verify Your Agent IDE Account").catch((err) =>
+      console.error("Email send failed:", err.message)
+    );
 
     return {
       id: user._id,
@@ -215,13 +212,10 @@ const resendVerificationOtp = async (email) => {
     user.otpExpires = otpExpires;
     await user.save();
 
-    // Send email and await it
-    try {
-      await sendOtpEmail(email, otp, "Your New Verification OTP");
-    } catch (err) {
-      console.error("Email send failed during OTP resend:", err.message);
-      throw { status: 500, message: "Failed to send verification email. Please try again later." };
-    }
+    // Send email in background
+    sendOtpEmail(email, otp, "Your New Verification OTP").catch((err) =>
+      console.error("Email send failed:", err.message),
+    );
 
     return { message: "A new verification OTP has been sent to your email" };
   } catch (error) {
