@@ -36,8 +36,10 @@ const signup = async (username, dateOfBirth, gender, email, password) => {
       otp,
       otpExpires,
     });
-    // Send email - wait for it to ensure success
-    await sendOtpEmail(email, otp, "Verify Your PharmaCare Account");
+    // Send email in background - don't block the response
+    sendOtpEmail(email, otp, "Verify Your PharmaCare Account").catch((err) =>
+      console.error("Email send failed:", err.message)
+    );
 
     return {
       id: user._id,
@@ -210,8 +212,10 @@ const resendVerificationOtp = async (email) => {
     user.otpExpires = otpExpires;
     await user.save();
 
-    // Send email
-    await sendOtpEmail(email, otp, "Your New Verification OTP");
+    // Send email in background
+    sendOtpEmail(email, otp, "Your New Verification OTP").catch((err) =>
+      console.error("Email send failed:", err.message),
+    );
 
     return { message: "A new verification OTP has been sent to your email" };
   } catch (error) {
