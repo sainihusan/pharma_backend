@@ -8,6 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const pillReminderRoutes = require("./routes/pillReminderRoutes");
+const pushRoutes = require("./routes/pushRoutes");
 const cors = require("cors");
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/pill-reminders", pillReminderRoutes);
+app.use("/api/push", pushRoutes);
 
 // -- Health check ---------------------------------------------
 app.get("/", (_req, res) => {
